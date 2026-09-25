@@ -70,14 +70,11 @@ class ToolRegistry:
             _validate_parameters(tool.parameters, kwargs)
         except ToolError as exc:
             return _result(False, error=str(exc))
-
-        gated = (
-            tool.requires_confirmation
-            or tool.risk in {RiskLevel.SENSITIVE, RiskLevel.DANGEROUS, RiskLevel.EXTERNAL_SIDE_EFFECT}
-        )
+        gated = tool.requires_confirmation or tool.risk in {
+            RiskLevel.SENSITIVE, RiskLevel.DANGEROUS, RiskLevel.EXTERNAL_SIDE_EFFECT
+        }
         if gated and not confirmed:
             return _result(False, error="CONFIRMATION_REQUIRED")
-
         try:
             data = tool.handler(**kwargs)
             return _result(True, data=data)
@@ -130,26 +127,14 @@ def workspace_list(workspace: Path, relative_path: str = ".") -> list[str]:
 
 def default_tools(workspace: Path) -> ToolRegistry:
     registry = ToolRegistry()
-    registry.register(
-        Tool(
-            "ping",
-            "Return a local health-check response.",
-            safe_ping,
-            {"type": "object", "properties": {}, "required": []},
-            category="diagnostics",
-        )
-    )
-    registry.register(
-        Tool(
-            "workspace_list",
-            "List entries inside the configured JARVIS workspace only.",
-            lambda relative_path=".": workspace_list(workspace, relative_path),
-            {
-                "type": "object",
-                "properties": {"relative_path": {"type": "string"}},
-                "required": [],
-            },
-            category="filesystem",
-        )
-    )
+    registry.register(Tool(
+        "ping", "Return a local health-check response.", safe_ping,
+        {"type": "object", "properties": {}, "required": []}, category="diagnostics",
+    ))
+    registry.register(Tool(
+        "workspace_list", "List entries inside the configured JARVIS workspace only.",
+        lambda relative_path=".": workspace_list(workspace, relative_path),
+        {"type": "object", "properties": {"relative_path": {"type": "string"}}, "required": []},
+        category="filesystem",
+    ))
     return registry
