@@ -32,7 +32,7 @@ def test_schema_and_confirmation():
     )
     assert registry.execute("danger", value="x")["error"] == "CONFIRMATION_REQUIRED"
     assert registry.execute("danger", confirmed=True, value="x")["data"] == "x"
-    assert registry.execute("danger", value=3)["error"].startswith("CONFIRMATION_REQUIRED")
+    assert "must be a string" in registry.execute("danger", confirmed=True, value=3)["error"]
 
 
 def test_workspace_tool_is_contained(tmp_path):
