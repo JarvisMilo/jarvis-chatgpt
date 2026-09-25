@@ -20,6 +20,7 @@ def build_parser() -> argparse.ArgumentParser:
     group.add_argument("--status", action="store_true")
     group.add_argument("--doctor", action="store_true")
     group.add_argument("--version", action="store_true")
+    parser.add_argument("--ui", action="store_true", help="Launch the ambient desktop HUD")
     return parser
 
 
@@ -47,6 +48,11 @@ def main(argv: list[str] | None = None) -> int:
         for key, value in results:
             print(f"{key}: {value}")
         return 0 if all(not value.startswith("FAIL") for _, value in results) else 1
+
+    if args.ui:
+        from .ui import launch_hud
+        launch_hud()
+        return 0
 
     provider = OllamaProvider(settings.ollama_base_url, settings.ollama_model, settings.ollama_timeout)
     core = JarvisCore(
