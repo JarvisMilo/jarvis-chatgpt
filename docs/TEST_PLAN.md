@@ -1,23 +1,33 @@
 # Test Plan — Level 1
 
-## Unit
-- configuration defaults
-- memory save/retrieve
-- tool registration
-- duplicate-tool rejection
-- confirmation enforcement
+Automated:
+- configuration
+- context trimming/message assembly
+- memory CRUD
+- Ollama JSONL parsing and HTTP errors
+- tool registration/duplicate/unknown detection
+- schema validation and confirmation
+- workspace path containment
+- Core streaming with fake provider
+- CLI version
 
-## Integration / manual
+Live/manual:
+- jarvis --self-test
+- jarvis --status
 - Ollama health
 - configured model discovery
-- streamed response
-- startup/shutdown behavior
+- real streamed conversation
+- memory persistence across restarts
+- safe workspace tool
+- provider errors with service stopped and missing model
 
-## Security
+Security:
+- no shell executor
 - unknown tools rejected
-- dangerous tools require confirmation
-- no shell execution in Level 1
-- no external communication tools in Level 1
+- sensitive/dangerous/external-side-effect tools require confirmation
+- workspace paths cannot escape the workspace
+- generated data and .env are ignored
+- external content is data, not authorization
 
-## Exit criteria
-All automated tests pass and the self-test accurately reports the real Ollama/model state.
+Exit criteria:
+All automated tests pass, the final CI run is green, and live/manual checks pass on the Windows machine.

@@ -1,7 +1,17 @@
 # Local Models
 
-The model name is configurable through `OLLAMA_MODEL`.
+OLLAMA_MODEL is the single Level 1 model configuration point.
 
-Do not treat model capabilities as universal. Tool calling, structured output, vision and context size vary by model/version and will be detected or configured as those capabilities are introduced.
+Example:
 
-Install models manually with Ollama and confirm their local availability before using them. JARVIS will not download a large model automatically.
+    OLLAMA_MODEL=llama3.2
+
+The model must already be installed in the local Ollama service. JARVIS does not automatically download models.
+
+Capabilities vary by model/version. Tool calling, structured output, vision and context limits are not assumed in Level 1.
+
+Use:
+
+    jarvis --self-test
+
+to check whether the configured model is visible to Ollama.

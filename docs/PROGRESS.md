@@ -1,33 +1,54 @@
 # Progress
 
 CURRENT_LEVEL: 1
-CURRENT_PHASE: Initial Level 1 implementation
+CURRENT_PHASE: Verification
 STATUS: IN_PROGRESS
 
-## Completed
-- Repository initialized with a minimal Level 1 architecture.
-- Central configuration.
-- Ollama provider abstraction with streaming.
-- SQLite basic memory repository.
-- Tool registry with risk/confirmation gate.
-- CLI and self-test.
-- Initial unit tests.
-- Architecture/roadmap documentation.
+## Implemented in repository
 
-## In progress
-- Verify the repository on the user's Windows machine.
-- Verify Ollama/model availability and run the test suite.
+- central configuration and .env.example
+- provider abstraction and OllamaProvider
+- chat, non-streaming parsing and streaming JSONL
+- controlled connection, HTTP, timeout and invalid-response errors
+- separate ConversationContext
+- SQLite memory save/get/list/update
+- ToolRegistry with definitions, schema validation, risk levels and confirmation
+- safe ping and workspace-contained listing tools
+- structured tool results
+- CLI: jarvis, --self-test, --status, --doctor, --version
+- logging
+- automated tests
+- Windows GitHub Actions test workflow
+- Level 1 documentation
 
-## Next
-- Run `python -m pytest`.
-- Run `python -m jarvis --self-test`.
-- Run a real Ollama chat.
-- Fix verified failures only.
+## Verified by repository inspection
 
-## Blockers
-- Hardware, installed Python, Ollama service and installed models cannot be verified from GitHub alone.
+- main is the default branch.
+- repository is public and writable by the connected account.
+- pyproject.toml has no paid LLM runtime dependency.
+- no OpenAI/Gemini/Anthropic runtime dependency exists.
+- .env and generated data/workspace are ignored.
 
-## Known issues
-- Tool calling from the model is intentionally not implemented yet.
-- Memory retrieval is recent-only in Level 1.
-- Windows-specific tools are deferred to Level 3.
+## Not yet verified
+
+These require execution on the actual runtime machine:
+
+- installed Python
+- local Ollama service
+- configured model
+- model capabilities
+- real streamed conversation
+- Windows CLI invocation
+- latest GitHub Actions result
+
+## Completion gate
+
+Do not mark Level 1 complete until automated tests pass and a real local Ollama conversation, streaming, memory, safe tool execution, error handling and self-test have been verified.
+
+## Intentional limits
+
+- no autonomous tool calling/planning
+- no shell execution
+- no full Windows control
+- no browser, audio or vision
+- recent-only memory retrieval
