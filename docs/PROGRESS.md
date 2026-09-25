@@ -29,6 +29,7 @@ from being lost while keeping current implementation scope controlled.
 - automated tests
 - Windows GitHub Actions test workflow
 - Level 1 documentation
+- Full future agent/tool/memory/voice/Windows/UI/automation/recovery/development/install/troubleshooting architecture contracts
 - complete capability matrix for the six-level target
 - Level 1 architecture updated with future extension boundaries
 
@@ -37,10 +38,12 @@ from being lost while keeping current implementation scope controlled.
 - main is the default branch.
 - repository is public and writable by the connected account.
 - latest code is committed on main.
+- Latest main commit: 53bfd1873119daff9bf744be8df0554c50f43313.
+- GitHub Actions CI was triggered for that commit and is currently queued; no pass/fail result yet.
 - pyproject.toml has no paid LLM runtime dependency.
 - no OpenAI/Gemini/Anthropic runtime dependency exists.
 - .env and generated data/workspace are ignored.
-- GitHub Actions workflow is present, but no run/status is available yet for the latest commit.
+- GitHub Actions workflow is present; the run for 53bfd1873119daff9bf744be8df0554c50f43313 is queued.
 
 ## Not yet verified
 
