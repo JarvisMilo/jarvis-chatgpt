@@ -1,6 +1,6 @@
 from __future__ import annotations
 import math
-from PyQt6.QtCore import QTimer, QRectF, Qt
+from PyQt6.QtCore import QTimer, QPointF, QRectF, Qt
 from PyQt6.QtGui import QColor, QPainter, QPen, QPolygonF
 from PyQt6.QtWidgets import QWidget
 
@@ -60,7 +60,7 @@ class FacetedAvatar(QWidget):
         ]
         pts = [ (cx+x*rx, cy+y*ry) for x,y in outline ]
         p.setBrush(QColor(18, 177, 180, 185))
-        p.drawPolygon(QPolygonF([__import__("PyQt6.QtCore", fromlist=["QPointF"]).QPointF(x,y) for x,y in pts]))
+        p.drawPolygon(QPolygonF([QPointF(x, y) for x, y in pts]))
 
         # Internal triangular facets.
         rows = [
@@ -71,7 +71,7 @@ class FacetedAvatar(QWidget):
         ]
         p.setBrush(Qt.BrushStyle.NoBrush)
         for row in rows:
-            pts2 = [__import__("PyQt6.QtCore", fromlist=["QPointF"]).QPointF(cx+x*rx, cy+y*ry) for x,y in zip(row[::2], row[1::2])]
+            pts2 = [QPointF(cx+x*rx, cy+y*ry) for x,y in zip(row[::2], row[1::2])]
             p.setPen(QPen(QColor(90, 240, 235, 78), max(0.7, scale*1.2)))
             p.drawPolyline(QPolygonF(pts2))
 
