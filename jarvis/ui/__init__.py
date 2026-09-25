@@ -1,3 +1,7 @@
-from .ambient import AmbientHUD, launch_hud
+from .ambient import AmbientHUD
+from .desktop import DesktopJARVIS, launch_desktop
 
-__all__ = ["AmbientHUD", "launch_hud"]
+# Backwards-compatible alias used by the CLI.
+launch_hud = launch_desktop
+
+__all__ = ["AmbientHUD", "DesktopJARVIS", "launch_desktop", "launch_hud"]
