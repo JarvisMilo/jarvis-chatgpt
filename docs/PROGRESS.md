@@ -1,89 +1,33 @@
 # Progress
 
-CURRENT_LEVEL: 1
-CURRENT_PHASE: Verification
+CURRENT_LEVEL: 6 (architecture/foundations)
 STATUS: IN_PROGRESS
 
-## Permanent project target
+## Latest checkpoint
 
-docs/CAPABILITY_MATRIX.md is now the authoritative checklist for the complete
-JARVIS target. It records the required capabilities, planned level, status,
-future module/interface, dependencies and test strategy.
+The repository now contains the Level 1 core plus the first executable cross-level foundations for the complete JARVIS target: event bus, global state machine, permission broker, action journal, task runtime, 15-agent registry, Windows application discovery/system/control adapters, switchable local voice interfaces, vision interfaces, and an ambient HUD layer.
 
-The matrix is broader than Level 1 by design. It prevents future capabilities
-from being lost while keeping current implementation scope controlled.
+This is intentionally **not** marked COMPLETE. A real full JARVIS requires hardware-specific integration and live verification on the user's Windows machine, including actual Ollama inference, STT/TTS engines, screenshots/OCR/UI Automation, application adapters, browser automation, full filesystem/process controls, scheduling, communications, remote pairing, and end-to-end recovery tests.
 
-## Implemented in repository
+## Implemented
+- Level 1 local-first Ollama chat, streaming, memory, tools, config, diagnostics, CLI, logging and CI.
+- 15 concrete agent specifications with missions and registry.
+- Event bus and global JARVIS state machine.
+- Permission Broker with LOW/MEDIUM/HIGH/CRITICAL policy gates.
+- Action Journal with reversible-action hook.
+- Concurrent task runtime with dependencies/status/cancellation primitives.
+- Windows discovery/system/control foundations without arbitrary shell execution.
+- Voice/STT/TTS and vision interfaces designed for local engine substitution.
+- Ambient HUD foundation independent from core logic.
 
-- central configuration and .env.example
-- provider abstraction and OllamaProvider
-- chat, non-streaming parsing and streaming JSONL
-- controlled connection, HTTP, timeout and invalid-response errors
-- separate ConversationContext
-- SQLite memory save/get/list/update
-- ToolRegistry with definitions, schema validation, risk levels and confirmation
-- safe ping and workspace-contained listing tools
-- structured tool results
-- CLI: jarvis, --self-test, --status, --doctor, --version
-- logging
-- automated tests
-- Windows GitHub Actions test workflow
-- Level 1 documentation
-- Full future agent/tool/memory/voice/Windows/UI/automation/recovery/development/install/troubleshooting architecture contracts
-- complete capability matrix for the six-level target
-- Level 1 architecture updated with future extension boundaries
+## Not yet VERIFIED locally
+- Windows hardware profile, GPU/VRAM/audio devices/camera.
+- Ollama service, installed models and actual streaming conversation.
+- Real microphone/STT/TTS/voice wake/clap behavior.
+- Real screenshots/OCR/UI tree and GUI automation.
+- Full application registry and adapter fallback chain.
+- Browser, communications, smart-home, phone and remote gateway integrations.
+- End-to-end multi-agent execution and recovery on Windows.
 
-## Repository verification
-
-- main is the default branch.
-- repository is public and writable by the connected account.
-- latest code is committed on main.
-- Latest main commit: 53bfd1873119daff9bf744be8df0554c50f43313.
-- GitHub Actions CI was triggered for that commit and is currently queued; no pass/fail result yet.
-- pyproject.toml has no paid LLM runtime dependency.
-- no OpenAI/Gemini/Anthropic runtime dependency exists.
-- .env and generated data/workspace are ignored.
-- GitHub Actions workflow is present; the run for 53bfd1873119daff9bf744be8df0554c50f43313 is queued.
-
-## Not yet verified
-
-These require execution on the actual runtime machine:
-
-- installed Python
-- local Ollama service
-- configured model
-- model capabilities
-- real streamed conversation
-- Windows CLI invocation
-- final automated test run
-- latest GitHub Actions result
-
-## Level 1 remaining work
-
-Before Level 1 can be declared complete:
-
-1. inspect and harden any remaining Level 1 code defects.
-2. verify automated tests on a real Windows/Python environment.
-3. verify Ollama is reachable and the configured model exists.
-4. verify a real streamed conversation.
-5. verify memory persistence and safe workspace tool behavior.
-6. verify controlled failures and self-test.
-7. verify security boundaries and logs.
-8. record exact results in this file.
-9. stop at Level 1 and wait for explicit authorization before Level 2.
-
-## Completion gate
-
-Do not mark Level 1 complete until automated tests pass and a real local Ollama
-conversation, streaming, memory, safe tool execution, error handling and
-self-test have been verified.
-
-## Intentional limits
-
-- no autonomous tool calling/planning
-- no shell execution
-- no full Windows control
-- no browser, audio or vision
-- recent-only memory retrieval
-
-NO LEVEL 2 WORK HAS STARTED.
+## Rule
+Do not claim a level is production-complete until its implementation and live acceptance tests both pass. The next development pass should deepen these foundations rather than bypassing verification.

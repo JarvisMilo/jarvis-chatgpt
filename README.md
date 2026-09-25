@@ -1,32 +1,20 @@
 # JARVIS Local
 
-Local-first personal assistant for Windows, using Ollama as the Level 1 LLM provider.
+Local-first personal assistant for Windows using Ollama. The repository is being developed as a cumulative six-level system: core intelligence, multi-agent orchestration, Windows control, local voice/vision, advanced intelligence, and an ambient full-assistant experience.
 
-## Level 1
+## Current state
 
-Implemented:
+The codebase contains the Level 1 core and executable foundations for Levels 2-6. These foundations include 15 agent specifications, orchestration primitives, Windows adapters, local voice/vision interfaces and an ambient HUD. They are deliberately separated so unfinished integrations cannot masquerade as completed capabilities.
 
-- centralized configuration
-- provider abstraction with OllamaProvider
-- chat and JSONL streaming
-- controlled Ollama connection, HTTP, timeout and invalid-response errors
-- separate conversation context
-- SQLite memory with save/get/list/update
-- explicit ToolRegistry with schema validation and risk gates
-- safe ping and workspace-contained filesystem listing
-- structured tool results
-- CLI, self-test, status, doctor and version commands
-- logging
-- automated tests and GitHub Actions CI
+**The project is not yet declared production-complete.** Live Windows hardware, Ollama, audio, vision, GUI automation and end-to-end acceptance tests still have to be performed on the target machine.
 
-No paid API is required. There is no OpenAI, Gemini or Anthropic runtime dependency.
+## Free/local architecture
 
-## Requirements
-
-- Python 3.11+
-- Ollama installed locally
-- at least one local Ollama model
-- Windows is the primary target
+- Ollama is the LLM provider; no paid API is required.
+- Core logic does not directly execute arbitrary shell strings.
+- Tool permissions and risk gates remain explicit.
+- Voice and vision use replaceable local engine interfaces.
+- The HUD is a presentation layer; it does not own business logic.
 
 ## Setup
 
@@ -49,16 +37,8 @@ Set OLLAMA_MODEL in .env to a model already installed in Ollama.
     jarvis --doctor
     jarvis --version
 
-Equivalent:
-
-    python -m jarvis
-
-Self-test performs live checks against the local Ollama service and configured model. It is expected to fail when Ollama is unavailable or the configured model is absent.
-
 ## Architecture
 
-    User -> CLI -> JarvisCore -> ConversationContext -> LLMProvider -> OllamaProvider -> Ollama
+    User -> Context -> Ollama -> Planner/Orchestrator -> Permission Broker -> Tools/Agents -> Observation -> Verification -> Memory -> User
 
-Tools are explicit and registered. The LLM has no direct shell or operating-system execution primitive. Filesystem access in Level 1 is limited to the configured JARVIS workspace.
-
-See docs/ARCHITECTURE.md and docs/SECURITY.md.
+See docs/ARCHITECTURE.md, docs/AGENTS.md, docs/TOOLS.md, docs/SECURITY.md and docs/PROGRESS.md.
