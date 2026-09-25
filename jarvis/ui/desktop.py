@@ -8,6 +8,7 @@ from ..core import JarvisCore
 from ..llm import OllamaProvider, LLMError
 from ..memory import MemoryRepository
 from ..tools import default_tools
+from ..runtime.state import JarvisState
 from .ambient import ReactorWidget
 
 class ChatWorker(QThread):
@@ -48,11 +49,11 @@ class DesktopJARVIS(QMainWindow):
     def send(self):
         text=self.input.text().strip()
         if not text or self.worker and self.worker.isRunning(): return
-        self.input.clear(); self.output.appendPlainText("YOU  › "+text); self.output.appendPlainText("JARVIS › "); self.status.setText("THINKING"); self.reactor.set_state(__import__('jarvis.runtime.state',fromlist=['JarvisState']).JarvisState.THINKING)
+        self.input.clear(); self.output.appendPlainText("YOU  › "+text); self.output.appendPlainText("JARVIS › "); self.status.setText("THINKING"); self.reactor.set_state(JarvisState.THINKING)
         self.worker=ChatWorker(self.core,text); self.worker.chunk.connect(self._chunk); self.worker.done.connect(self._done); self.worker.failed.connect(self._failed); self.worker.start()
     def _chunk(self,s): self.output.moveCursor(self.output.textCursor().MoveOperation.End); self.output.insertPlainText(s); self.output.ensureCursorVisible()
-    def _done(self): self.output.appendPlainText("\\n"); self.status.setText("READY"); self.reactor.set_state(__import__('jarvis.runtime.state',fromlist=['JarvisState']).JarvisState.SUCCESS)
-    def _failed(self,e): self.output.appendPlainText("\\n[ERROR] "+e); self.status.setText("ERROR"); self.reactor.set_state(__import__('jarvis.runtime.state',fromlist=['JarvisState']).JarvisState.ERROR)
+    def _done(self): self.output.appendPlainText("\\n"); self.status.setText("READY"); self.reactor.set_state(JarvisState.SUCCESS)
+    def _failed(self,e): self.output.appendPlainText("\\n[ERROR] "+e); self.status.setText("ERROR"); self.reactor.set_state(JarvisState.ERROR)
 
 def launch_desktop():
     app=QApplication.instance() or QApplication(sys.argv); win=DesktopJARVIS(); win.show(); return app.exec()
