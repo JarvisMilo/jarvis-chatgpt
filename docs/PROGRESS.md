@@ -21,13 +21,15 @@ STATUS: IN_PROGRESS
 - Windows GitHub Actions test workflow
 - Level 1 documentation
 
-## Verified by repository inspection
+## Repository verification
 
 - main is the default branch.
 - repository is public and writable by the connected account.
+- latest code is committed on main.
 - pyproject.toml has no paid LLM runtime dependency.
 - no OpenAI/Gemini/Anthropic runtime dependency exists.
 - .env and generated data/workspace are ignored.
+- GitHub Actions workflow is present, but no run/status is available yet for the latest commit.
 
 ## Not yet verified
 
@@ -39,6 +41,7 @@ These require execution on the actual runtime machine:
 - model capabilities
 - real streamed conversation
 - Windows CLI invocation
+- final automated test run
 - latest GitHub Actions result
 
 ## Completion gate
@@ -52,3 +55,5 @@ Do not mark Level 1 complete until automated tests pass and a real local Ollama 
 - no full Windows control
 - no browser, audio or vision
 - recent-only memory retrieval
+
+NO LEVEL 2 WORK HAS STARTED.
